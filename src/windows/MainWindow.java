@@ -1,33 +1,30 @@
 package windows;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.TexturePaint;
 
 import javax.swing.*;
 
 import main.Engine;
-import main.GameThread;
+import main.GameCycle;
 import aux.SpriteCache;
 
 @SuppressWarnings("serial")
-public class MainWindow extends JFrame implements Engine, MouseListener{
+public class MainWindow extends JFrame implements Engine, MouseListener, KeyListener{
 
 	private SpriteCache spriteCache;
 	private BufferStrategy strategy;
+	private GameCycle gameCycle;
+	private Thread gameThread;
 
 	public JPanel menuPanel;
 	public JPanel gamePanel;
 	public JButton b1Duck;
 	public JButton b2Ducks;
-	private JButton bExit;
 
 	public MainWindow(String title){
 		super(title);
@@ -35,7 +32,7 @@ public class MainWindow extends JFrame implements Engine, MouseListener{
 		createBufferStrategy(2);
 		strategy = getBufferStrategy();
 		
-		setBounds(0,0,Engine.WIDTH,Engine.HEIGHT);
+		setBounds(300,100,Engine.WIDTH,Engine.HEIGHT);
 
 		spriteCache = new SpriteCache();
 		
@@ -44,42 +41,30 @@ public class MainWindow extends JFrame implements Engine, MouseListener{
 		startMenu();
 	}
 	public void startMenu(){
-		//Pintado del background
-		Graphics2D g = (Graphics2D)getStrategy().getDrawGraphics();
-		BufferedImage background = spriteCache.getSprite("mainmenu.gif");
-
-		g.setPaint(new TexturePaint(background, new Rectangle(0,0,Engine.WIDTH, Engine.HEIGHT)));
-		g.fillRect(0, 0, getWidth(), getHeight());
-		getStrategy().show();
+		JLabel backgroundLabel = new JLabel();
+		backgroundLabel.setBounds(0, 0, Engine.WIDTH, Engine.HEIGHT);
+		BufferedImage backgroundImage = spriteCache.getSprite("mainmenu.gif");
+		backgroundLabel.setIcon(new ImageIcon(backgroundImage));
 		
-		//Panel que va a ocupar el tama–o del JFrame
-		menuPanel = new JPanel();
-		menuPanel.setLayout(new BorderLayout());
-		menuPanel.setPreferredSize(new Dimension(Engine.WIDTH,Engine.HEIGHT));
-
-		//Panel contenedor que va a ir en el centro del BorderLayout
-		JPanel centerPanel = new JPanel();
-		centerPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-
-		//Pongo el panel en la ventana
-		getContentPane().add(menuPanel);
-		//A–ado a el panel del menu con BL el panel central que es un FL
-		menuPanel.add(centerPanel, BorderLayout.CENTER);
-
 		//Botones que ocupan el centro
 		b1Duck = new JButton("1 Duck");
 		b1Duck.addMouseListener(this);
+		b1Duck.setBounds(340, 270, 100, 25);
 		
 		b2Ducks = new JButton("2 Ducks");
 		b2Ducks.addMouseListener(this);
+		b2Ducks.setBounds(340, 293, 100, 25);
 		
-		bExit = new JButton("Quit");
-		bExit.addMouseListener(this);
-
+		menuPanel = new JPanel();
+		menuPanel.setLayout(null);
+		
 		//A–ado los botones al contenedor que hay en el centro de el BorderLayout
-		centerPanel.add(b1Duck);
-		centerPanel.add(b2Ducks);
-		centerPanel.add(bExit);
+		menuPanel.add(b1Duck);
+		menuPanel.add(b2Ducks);
+		
+		menuPanel.add(backgroundLabel);
+		
+		getContentPane().add(menuPanel);
 	}
 
 	public SpriteCache getSpriteCache(){
@@ -106,17 +91,16 @@ public class MainWindow extends JFrame implements Engine, MouseListener{
 		Object source = e.getSource();
 		if(source == this.b2Ducks){
 			//NEW GAME
-			GameThread gameThread = new GameThread(this, 2);
-			Thread t = new Thread(gameThread);
-			t.start();
+			gameCycle = new GameCycle(this, 2);
+			gameThread = new Thread(gameCycle);
+			getContentPane().remove(menuPanel);
+			gameThread.start();
 		}else if(source == this.b1Duck){
 			//NEW GAME
-			GameThread gameThread = new GameThread(this, 1);
-			Thread t = new Thread(gameThread);
-			t.start();	
-		}else if(source == this.bExit){
-			//EXIT GAME
-			dispose();
+			gameCycle = new GameCycle(this, 1);
+			gameThread = new Thread(gameCycle);
+			getContentPane().remove(menuPanel);
+			gameThread.start();	
 		}
 	}
 
@@ -142,5 +126,23 @@ public class MainWindow extends JFrame implements Engine, MouseListener{
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getKeyCode() == 27){
+			System.out.println("Has pulsado la tecla escape");
+			gameThread.interrupt();
+		}
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
