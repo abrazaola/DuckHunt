@@ -15,9 +15,9 @@ public class Duck extends Entity implements Shootable{
 		super(engine);
 		isBonus = bonus;
 		if (isBonus) {
-			setSpriteNames(new String[]{"bonusduckright0.gif","bonusduckright1.gif", "bonusduckright2.gif"});
+			setSpriteNames(new String[]{"bonusduckupright0.gif","bonusduckupright1.gif", "bonusduckupright2.gif"});
 		} else {
-			setSpriteNames(new String[]{"duckright0.gif","duckright1.gif", "duckright2.gif"});			
+			setSpriteNames(new String[]{"duckupright0.gif","duckupright1.gif", "duckupright2.gif"});			
 		}
 		setFrameSpeed(35);
 		hitted = false;
@@ -26,7 +26,7 @@ public class Duck extends Entity implements Shootable{
 	
 	public void act() {
 		super.act();
-		// Investigar como hacer que puedan ir horizontalmente tambiŽn
+		// Investigar como hacer que puedan ir horizontalmente tambiï¿½n
 		getArea().setLocation(x, y);
 		x+=vx;
 		if(x<0 || x>Engine.WIDTH){
@@ -39,7 +39,7 @@ public class Duck extends Entity implements Shootable{
 			}
 		}
 		y+=vy;
-		if(y<0 || y>Engine.HEIGHT-170){
+		if(y<0 || y>Engine.HEIGHT-190){
 			// Cambio de sentido
 			vy = -vy;
 			if (vy > 0) {
@@ -49,6 +49,11 @@ public class Duck extends Entity implements Shootable{
 			}
 			
 		}
+	}
+	
+	public void stop() {
+		vx = 0;
+		vy = 0;
 	}
 	
 	public int getVx() {
@@ -85,7 +90,7 @@ public class Duck extends Entity implements Shootable{
 	}
 
 	public void fall() {
-		System.out.println("Estoy cayendo"+getY()+" "+(Engine.HEIGHT-170));
+		System.out.println("Estoy cayendo"+getY()+" "+(Engine.HEIGHT-190));
 		if (getY()<(Engine.HEIGHT-170)) {
 			//Cayendo...
 			if (isBonus) {

@@ -7,10 +7,10 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 public class SpriteCache {
-	private HashMap sprites;
+	private HashMap<String, BufferedImage> sprites;
 	
 	public SpriteCache(){
-		sprites = new HashMap();
+		sprites = new HashMap<String, BufferedImage>();
 	}
 	
 	private BufferedImage loadImage(String nombre){
