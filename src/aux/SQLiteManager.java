@@ -8,14 +8,26 @@ import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
+/**
+ * Clase que se encarga de interactuar con la base de datos SQLite
+ * @author aitor
+ *
+ */
 public class SQLiteManager {
 	private String path;
 	private Connection connection;
 	private Statement query;
 	
+	/**
+	 * Constructor
+	 * @param p Ruta en la que se encuentra la BBDD
+	 */
 	public SQLiteManager(String p){
 		path = p;
 	}
+	/**
+	 * Realiza la conexión con la BBDD
+	 */
 	public void connect(){
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -31,6 +43,11 @@ public class SQLiteManager {
 		}
 	}
 
+	/**
+	 * Realiza la inserción de un dato en la BBDD
+	 * @param sql Cadena a ejecutar en SQL
+	 * @return
+	 */
 	public boolean insert(String sql){
 		 boolean valor = true;
 		 connect();
@@ -54,6 +71,11 @@ public class SQLiteManager {
 		 return valor;
 	}
 	
+	/**
+	 * Realiza una consulta sobre la BBDD
+	 * @param sql Cadena SQL a ejecutar
+	 * @return Datos de la BBDD
+	 */
 	public ResultSet query(String sql){
 		connect();
 		

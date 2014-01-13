@@ -18,6 +18,12 @@ import windows.MainWindow;
 import characters.Duck;
 import characters.Entity;
 
+/**
+ * Clase que controla toda la rutina que se ejecuta una vez que el juego se ha iniciado 
+ * hasta que el juego termina
+ * @author aitor
+ *
+ */
 public class GameCycle implements Runnable, MouseListener, KeyListener, MouseMotionListener {
 	private final static int WEAPONBULLETS = 2;
 	private int ducksForGame;
@@ -42,11 +48,19 @@ public class GameCycle implements Runnable, MouseListener, KeyListener, MouseMot
 	private MainWindow mainWindow;
 	private Graphics2D g;
 		
+	/**
+	 * Contructor
+	 * @param mainWindow Ventana sobre la que se va a pintar toda la actividad de juego
+	 * @param ducks Patos con los que se quiere jugar
+	 */
 	public GameCycle(MainWindow mainWindow, int ducks) {
 		this.mainWindow = mainWindow;
 		ducksForGame = ducks;
 	}
 	
+	/**
+	 * Prepara las variables del juego a un estado inicial correcto
+	 */
 	private void initWorld() {
 		//Configura los par�metros de inicio de el juego
 		stageNumber = 1;
@@ -58,6 +72,9 @@ public class GameCycle implements Runnable, MouseListener, KeyListener, MouseMot
 		nextStage();
 	}
 
+	/**
+	 * Actualiza el estado de las variables del juego
+	 */
 	private void updateWorld() {
 		//Actualiza todos los objetos de el juego
 		if (stageTime < challengeTime && deadDucks < ducksForGame ){
@@ -99,6 +116,9 @@ public class GameCycle implements Runnable, MouseListener, KeyListener, MouseMot
 		}
 	}
 
+	/**
+	 * Se encarga de pintar lo que ocurre en el juego
+	 */
 	private void paintWorld() {
 		//Pintado de todo lo que est� ocurriendo actualmente
 		g = (Graphics2D)strategy.getDrawGraphics();
@@ -117,6 +137,9 @@ public class GameCycle implements Runnable, MouseListener, KeyListener, MouseMot
 		strategy.show();
 	}
 	
+	/**
+	 * Pinta el HUD, lugar donde se muestran datos como la puntuación actual, nivel, etc
+	 */
 	private void paintHUD() {
 		g = (Graphics2D)strategy.getDrawGraphics();
 		g.setColor(Color.white);
@@ -157,6 +180,9 @@ public class GameCycle implements Runnable, MouseListener, KeyListener, MouseMot
 		strategy.show();
 	}
 	
+	/**
+	 * Pinta el fogonazo blanco que se produce en cada disparo
+	 */
 	private void paintShoot() {
 		g = (Graphics2D)strategy.getDrawGraphics();
 		g.setColor(Color.WHITE);
@@ -164,6 +190,10 @@ public class GameCycle implements Runnable, MouseListener, KeyListener, MouseMot
 		strategy.show();				
 	}
 
+	/**
+	 * Avanza a el siguiente nivel reproduciendo el sonido correspondiente y reseteando 
+	 * las variables que les corresponde
+	 */
 	private void nextStage(){
 		System.out.println("New level!");
 		this.mainWindow.playSound("nextlevelsong.m4a");
@@ -206,6 +236,9 @@ public class GameCycle implements Runnable, MouseListener, KeyListener, MouseMot
 		stageNumber++;
 	}
 	
+	/**
+	 * Termina el juego pintando el mensaje de Game Over y la tabla de puntos
+	 */
 	private void gameOver() {
 		gameOver = true;
 		
@@ -225,6 +258,10 @@ public class GameCycle implements Runnable, MouseListener, KeyListener, MouseMot
 		mainWindow.launchScores();
 	}
 	
+	/**
+	 * Aumenta la puntuación en función de si el pato al que se ha hecho blanco es bonus o no
+	 * @param bonus Indica si el incremento tiene bonus o no
+	 */
 	private void increaseScore(boolean bonus) {
 		if (this.mainWindow.getScore() == 0) {
 			if (bonus) {
@@ -241,12 +278,18 @@ public class GameCycle implements Runnable, MouseListener, KeyListener, MouseMot
 		}
 	}
 	
+	/**
+	 * Recarga balas en el arma
+	 */
 	private void reloadWeapon() {
 		this.mainWindow.playSound("reloadsong.m4a");
 		remainBullets = WEAPONBULLETS;
 		System.out.println("Arma recargada.");
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		this.mainWindow.getGameCanvas().setVisible(true);
@@ -300,6 +343,11 @@ public class GameCycle implements Runnable, MouseListener, KeyListener, MouseMot
 		}
 	}
 
+	/**
+	 * Dispara en las coordenadas del ratón respetando el área de acción del arma 
+	 * con respecto a su calibre 
+	 * @param e Evento de ratón
+	 */
 	private void fireAction(MouseEvent e) {
 		if(remainBullets > 0) {
 			//FIRE

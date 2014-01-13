@@ -3,6 +3,11 @@ package characters;
 import main.Engine;
 import main.Shootable;
 
+/**
+ * Clase descendiente de Entity que representa un pato en el juego
+ * @author aitor
+ *
+ */
 public class Duck extends Entity implements Shootable{
 	protected int vx;
 	protected int vy;
@@ -11,6 +16,11 @@ public class Duck extends Entity implements Shootable{
 	public boolean inFloor;
 	public boolean isBonus;
 	
+	/**
+	 * Constructor
+	 * @param engine Frame con interfaz engine
+	 * @param bonus Indica si el pato contendrá bonificación extra
+	 */
 	public Duck(Engine engine, boolean bonus) {
 		super(engine);
 		isBonus = bonus;
@@ -24,6 +34,9 @@ public class Duck extends Entity implements Shootable{
 		inFloor = false;
 	}
 	
+	/* (non-Javadoc)
+	 * @see characters.Entity#act()
+	 */
 	public void act() {
 		super.act();
 		// Investigar como hacer que puedan ir horizontalmente tambi�n
@@ -51,44 +64,82 @@ public class Duck extends Entity implements Shootable{
 		}
 	}
 	
+	/**
+	 * Detiene el movimiento del pato
+	 */
 	public void stop() {
 		vx = 0;
 		vy = 0;
 	}
 	
+	/**
+	 * Obtiene la velocidad con la que se mueve en el eje X
+	 * @return
+	 */
 	public int getVx() {
 		return vx;
 	}
 	
+	/**
+	 * Establece la velocidad con la que se mueve en el eje X
+	 * @param i
+	 */
 	public void setVx(int i) {
 		vx = i;
 	}
+	/**
+	 * Obtiene la velocidad con la que se mueve en el eje Y
+	 * @return
+	 */
 	public int getVy(){
 		return vy;
 	}
 	
+	/**
+	 * Establece la velocidad con la que se mueve en el eje Y
+	 * @param i
+	 */
 	public void setVy(int i) {
 		vy = i;
 	}
+	/* (non-Javadoc)
+	 * @see main.Shootable#getHitted()
+	 */
 	public boolean getHitted() {
 		return hitted;
 	}
+	/* (non-Javadoc)
+	 * @see main.Shootable#setHitted(boolean)
+	 */
 	public void setHitted(boolean h) {
 		hitted = h;
 	}
 	
+	/**
+	 * Establece si el pato es bonus o no
+	 * @param b
+	 */
 	public void setBonus(boolean b) {
 		isBonus = b;
 	}
 	
+	/* (non-Javadoc)
+	 * @see main.Shootable#getBonus()
+	 */
 	public boolean getBonus() {
 		return isBonus;
 	}
 	
+	/* (non-Javadoc)
+	 * @see main.Shootable#isAtFloor()
+	 */
 	public boolean isAtFloor() {
 		return inFloor;
 	}
 
+	/* (non-Javadoc)
+	 * @see characters.Entity#fall()
+	 */
 	public void fall() {
 		System.out.println("Estoy cayendo"+getY()+" "+(Engine.HEIGHT-190));
 		if (getY()<(Engine.HEIGHT-170)) {
@@ -108,6 +159,9 @@ public class Duck extends Entity implements Shootable{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see main.Shootable#shooted()
+	 */
 	public void shooted() {
 		vx = 0;
 		vy = 0;

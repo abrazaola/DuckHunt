@@ -24,6 +24,11 @@ import main.GameCycle;
 import aux.SQLiteManager;
 import aux.SpriteCache;
 
+/**
+ * Clase que representa la ventana sobre la que se muestra todo el contenido de la aplicación
+ * @author aitor
+ *
+ */
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame implements Engine, MouseListener{
 	
@@ -64,6 +69,10 @@ public class MainWindow extends JFrame implements Engine, MouseListener{
 	private JTable tbScoreTable;
 	private DefaultTableModel scoreTableModel;
 
+	/**
+	 * Constructor
+	 * @param title Título de la ventana creada
+	 */
 	public MainWindow(String title){
 		super(title);
 		gameCanvas = new Canvas();		
@@ -214,11 +223,17 @@ public class MainWindow extends JFrame implements Engine, MouseListener{
 		t.start();
 	}
 	
+	/**
+	 * Muestra la tarjeta en la que se muestra el logo de mi marca de desarrollo
+	 */
 	public void launchLogo() {
 		CardLayout cl = (CardLayout)(cards.getLayout());
 		cl.show(cards, LOGOPANEL);
 	}
 	
+	/**
+	 * Muestra la tarjeta en la que se encuentra el menú principal
+	 */
 	public void launchMenu() {
 		CardLayout cl = (CardLayout)(cards.getLayout());
 		cl.show(cards, MENUPANEL);
@@ -227,6 +242,10 @@ public class MainWindow extends JFrame implements Engine, MouseListener{
 		playSound("mainmenusong.m4a");		
 	}
 	
+	/**
+	 * Muestra la tarjeta en la que se encuentra el juego
+	 * @param ducks Patos que se desean tener en el juego (1 o 2)
+	 */
 	public void launchGame(int ducks) {
 		// NEW GAME
 		gameCycle = new GameCycle(this, ducks);
@@ -239,12 +258,19 @@ public class MainWindow extends JFrame implements Engine, MouseListener{
 		gameThread.start();
 	}
 	
+	/**
+	 * Muestra la tarjeta en la que se encuentra la tabla de puntuaciones
+	 */
 	public void launchScores() {
 		CardLayout cl = (CardLayout)(getCards().getLayout());
 		cl.show(getCards(), MainWindow.SCOREPANEL);
 		txPlayerName.requestFocus();
 	}
 	
+	/**
+	 * Reproduce un audio utilizando el Framework JavaFX en un hilo independiente
+	 * @param audio Fichero de audio a reproducir
+	 */
 	public void playSound(final String audio) {
 		Thread t = new Thread(new Runnable(){
 			@Override
@@ -267,34 +293,64 @@ public class MainWindow extends JFrame implements Engine, MouseListener{
 		t.start();	
 	}
 
+	/* (non-Javadoc)
+	 * @see main.Engine#getSpriteCache()
+	 */
 	public SpriteCache getSpriteCache(){
 		return spriteCache;
 	}
 
+	/**
+	 * Get para el hilo sobre el que se ejecuta todos los procesos del juego
+	 * @return
+	 */
 	public Thread getGameThread() {
 		return gameThread;
 	}
 	
+	/**
+	 * Get para el objeto Canvas sobre el que se pinta el contenido de el juego
+	 * @return
+	 */
 	public Canvas getGameCanvas(){
 		return gameCanvas;
 	}
 
+	/**
+	 * Get para el objeto que contiene todos los paneles de tipo tarjeta que maneja la ventana principal
+	 * @return
+	 */
 	public JFXPanel getCards() {
 		return cards;
 	}
 	
+	/**
+	 * Get para el objeto manager de la BBDD SQLite
+	 * @return
+	 */
 	public SQLiteManager getSQLManager() {
 		return manager;
 	}
 	
+	/**
+	 * Establece una puntuación
+	 * @param s
+	 */
 	public void setScore(long s) {
 		score = s;
 	}
 	
+	/**
+	 * Obtienes la puntuación
+	 * @return
+	 */
 	public long getScore() {
 		return score;
 	}
 	
+	/**
+	 * Actualiza la variable de puntuación máxima en función de los datos de la BBDD
+	 */
 	public void updateMaxScore() {
 		ResultSet results = manager.query("SELECT MAX(score) FROM Game");
 		
@@ -307,6 +363,9 @@ public class MainWindow extends JFrame implements Engine, MouseListener{
 		}
 	}
 
+	/**
+	 * Recupera las puntuaciones de la BBDD y las carga en la tabla de puntos
+	 */
 	public void viewScores() {
 		lPlayerScore.setText(String.valueOf(getScore()));
 		scoreTableModel.getDataVector().removeAllElements();
@@ -322,6 +381,10 @@ public class MainWindow extends JFrame implements Engine, MouseListener{
 		}
 	}
 
+	/**
+	 * Método estático desde el que se lanza la ventana
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// Barra de men� nativa en OSX
 		String SO=System.getProperty("os.name");
