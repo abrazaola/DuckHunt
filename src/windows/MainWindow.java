@@ -21,8 +21,8 @@ import javax.swing.table.DefaultTableModel;
 
 import main.Engine;
 import main.GameCycle;
-import aux.SQLiteManager;
-import aux.SpriteCache;
+import auxil.SQLiteManager;
+import auxil.SpriteCache;
 
 /**
  * Clase que representa la ventana sobre la que se muestra todo el contenido de la aplicación

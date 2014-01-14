@@ -2,7 +2,7 @@ package main;
 
 import java.awt.image.ImageObserver;
 
-import aux.SpriteCache;
+import auxil.SpriteCache;
 
 /**
  * Interfaz que implementan los Frames sobre los que se va a realizar un juego

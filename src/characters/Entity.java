@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import main.Engine;
-import aux.SpriteCache;
+import auxil.SpriteCache;
 
 /**
  * Clase que representa una entidad que interactúa con el jugador en el juego

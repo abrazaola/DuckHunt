@@ -1,4 +1,4 @@
-package aux;
+package auxil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,7 +26,7 @@ public class SQLiteManager {
 		path = p;
 	}
 	/**
-	 * Realiza la conexión con la BBDD
+	 * Realiza la conexi??n con la BBDD
 	 */
 	public void connect(){
 		try {
@@ -44,7 +44,7 @@ public class SQLiteManager {
 	}
 
 	/**
-	 * Realiza la inserción de un dato en la BBDD
+	 * Realiza la inserci??n de un dato en la BBDD
 	 * @param sql Cadena a ejecutar en SQL
 	 * @return
 	 */

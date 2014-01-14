@@ -1,4 +1,4 @@
-package aux;
+package auxil;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 /**
- * Clase encargada de mantener una caché de las imagenes usadas en el juego
+ * Clase encargada de mantener una cach?? de las imagenes usadas en el juego
  * @author aitor
  *
  */
@@ -22,8 +22,8 @@ public class SpriteCache {
 	}
 	
 	/**
-	 * Método de carga de imágen
-	 * @param nombre Nombre del fichero que contiene la imágen
+	 * M??todo de carga de im??gen
+	 * @param nombre Nombre del fichero que contiene la im??gen
 	 * @return
 	 */
 	private BufferedImage loadImage(String nombre){
@@ -40,9 +40,9 @@ public class SpriteCache {
 	}
 	
 	/**
-	 * Método público desde el que se solicita una imagen
+	 * M??todo p??blico desde el que se solicita una imagen
 	 * @param nombre Fichero imagen
-	 * @return Imágen requerida
+	 * @return Im??gen requerida
 	 */
 	public BufferedImage getSprite(String nombre){
 		BufferedImage img=(BufferedImage)sprites.get(nombre);

@@ -1,6 +1,6 @@
 eclipse.preferences.version=1
-encoding//src/aux/SQLiteManager.java=UTF-8
-encoding//src/aux/SpriteCache.java=UTF-8
+encoding//src/auxil/SQLiteManager.java=UTF-8
+encoding//src/auxil/SpriteCache.java=UTF-8
 encoding//src/characters/Duck.java=UTF-8
 encoding//src/characters/Entity.java=UTF-8
 encoding//src/main/Engine.java=UTF-8
